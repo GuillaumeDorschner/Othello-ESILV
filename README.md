@@ -41,10 +41,12 @@ L'IA utilise un algorithme Minimax avec élagage Alpha-Beta pour rechercher l'ar
 Début (12 premiers coups) :
 - Priorité au placement des pions loin du centre
 - Priorité au gain de pions
+
 Milieu (36 coups suivants) :
 - Priorité aux positions de bord et de coin
 - Priorité à l'acquisition de pions
 - Privilégier les coups qui permettent une mobilité future
+
 Fin (12 derniers coups) :
 - Donner la priorité au gain de pions
 - Priorité aux coins importants
