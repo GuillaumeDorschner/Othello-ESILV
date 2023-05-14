@@ -14,11 +14,11 @@ Python 3.x
 Installation de l'application
 Clonez le dépôt :
 ```bash
-git clone https://github.com/yourusername/othello-ai.git
+git clone https://github.com/yourusername/othello-ai.git](https://github.com/GuillaumeDorschner/Othello-ESILV.git
 ```
 Naviguez jusqu'au répertoire du projet :
 ```bash
-cd othello-ai
+cd Othello-ESILV
 ```
 
 ## Lancer le jeu
