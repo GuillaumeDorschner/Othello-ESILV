@@ -1,17 +1,15 @@
-#from MinMax import MinMax
-#import Othello_IG as IG
-import Othello as Ot
+"""
+Titre du programme : Projet Othello
+Auteur : Guillaume Dorschner / Valentin Grateau / Louis Anne
+Date de création : 17/04/2023
+Description : jeu d'Othello avec IA MinMax 
+"""
 
-from tkinter import *
+import Othello_IG as IG
+from tkinter import Tk
 
+#création de la fenêtre de jeu
+fenetre = Tk()
 
-Ot.Game()
-#fenetre = Tk()
-#interface = IG.Interface(fenetre)
-#tab = interface.jeu.Pose()
-#coord = [(i, j) for i, j in tab if not None]
-#print(coord)
-#IG.Interface(fenetre)
-
-
-
+#lancement du jeu
+interface = IG.Interface(fenetre)
