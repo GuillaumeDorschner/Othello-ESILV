@@ -6,38 +6,37 @@ from colored import fg, stylize
 
 class Othello:
 
-  def __init__(self, nbjoueur, joueurdep=1) -> None:
+  def __init__(self, nbjoueur, ordi=1) -> None:
     """
     Créer l'objet Othello avec un nombre de joueurs et un joueur de départ.
 
     Args:
       nbjoueur (int): Nombre de joueurs.
       joueurdep (int, optional): Joueur qui commence. Par défaut, c'est le joueur 1. (1 blanc / -1 noir)
-
-    Returns:
-      None
     """
     self.nbjoueur = nbjoueur
     self.plateau = np.zeros((8, 8), dtype=int)
-    self.tour = 0
     self.plateau[4][4] = self.plateau[3][3] = 1
     self.plateau[3][4] = self.plateau[4][3] = -1
-    self.pion = {1: 2, -1: 2}
-    self.joueur = 1
-    self.joueur_depart = joueurdep
+    self.joueur = -1
+    self.ordi = ordi
+    self.deep = 0
+
+  def nbtour(self):
+    return np.sum(self.plateau != 0)
 
   def Affichage(self, manger):
     """
     Affiche le plateau avec les positions jouable.
 
     Args:
-      manger (list): ???
+      manger (list): tableau indiquant les pions mangé pour les positions qui ont été joué.
 
     Returns:
       None
     """
     print(
-      f"\n\ntour: {self.tour} \n noir: {np.sum(self.plateau == -1)} \nblanc: {np.sum(self.plateau == 1)} \n"
+      f"\n\ntour: {self.nbtour()} \n noir: {np.sum(self.plateau == -1)} \nblanc: {np.sum(self.plateau == 1)} \n"
     )
     for i in range(len(self.plateau)):
       if (i == 0):
@@ -59,7 +58,7 @@ class Othello:
 
   def Tour(self):
     """
-    Jour un tour de jeu.
+    Joue un tour de jeu.
 
     Args:
       None
@@ -69,7 +68,7 @@ class Othello:
     """
     manger = self.Pose()
     self.Affichage(manger)
-    if (self.nbjoueur == 2 or self.joueur == self.joueur_depart):
+    if (self.nbjoueur == 2 or self.joueur != self.ordi):
       coord = input(
         f'joueur {self.joueur}, où souhaitez vous placer votre pion ? ex: "e5"'
       )
@@ -83,35 +82,28 @@ class Othello:
         i = int(coord[1])
       self.Change_Plateau(i, j, manger, self.joueur)
     else:
-      best_x, best_y = MM.AlphaBetaSearch(self, self.joueur, 8)
-      self.Change_Plateau(best_x, best_y, manger)
+      coord = [[i, j] for i in range(8) for j in range(8)
+               if len(manger[i][j]) != 0]
+      if len(coord) > 0:
+        best_x, best_y = MM.AlphaBetaSearch(self, self.joueur, 6)
+        self.Change_Plateau(best_x, best_y, manger)
     self.joueur = -self.joueur
 
-  def Change_Plateau(self, i, j, tab, retour=False):
+  def Change_Plateau(self, i, j, manger):
     """
-    Modifie le plateau de jeu en fonction du coup a joué.
+    Modifie le plateau de jeu en fonction du coup qui a été joué.
 
     Args:
       i (int): Coordonnée x du coup a joué.
       j (int): Coordonnée y du coup a joué.
-      manger (list): ???
-      retour (bool, optional): ???
+      manger (list[][]): tableau indiquant les pions mangé pour les positions qui ont été joué.
 
     Returns:
       None
     """
-    plateau = self.plateau
-    plateau[i][j] = self.joueur
-    self.pion[self.joueur] += 1
-    for pion_mange in tab[i][j]:
-      plateau[pion_mange[0]][pion_mange[1]] = self.joueur
-      self.pion[self.joueur] += 1
-      self.pion[-self.joueur] -= 1
-    self.tour += 1
-    if (retour):
-      return plateau
-    else:
-      self.plateau = plateau
+    self.plateau[i][j] = self.joueur
+    for pion_mange in manger[i][j]:
+      self.plateau[pion_mange[0]][pion_mange[1]] = self.joueur
 
   def Pose(self):
     """
@@ -121,7 +113,7 @@ class Othello:
       None
 
     Returns:
-      list: Liste de coordonnées des pions qui peuvent être capturés.
+      list[][]: Liste de coordonnées des pions qui peuvent être capturés.
     """
     manger = []
     for i in range(len(self.plateau)):
@@ -135,14 +127,14 @@ class Othello:
 
   def Manger(self, i, j):
     """
-    ???
+    Retourne un tableau indiquant les pions mangé pour la position a joué.
 
     Args:
       i (int): Coordonnée x de la position.
       j (int): Coordonnée y de la position.
 
     Returns:
-      list: ???
+      list: Liste de coordonnées des pions qui peuvent être capturés.
     """
     output = []
     tabi = [-1, -1, -1, 0, 0, 1, 1, 1]
@@ -193,23 +185,3 @@ def Affichage(plateau):
     print(
       '________________________________________________________________________________'
     )
-
-
-def Game():
-  """
-  Fonction pour Run l'Othello.
-
-  Args:
-    None
-
-  Returns:
-    None
-  """
-
-  jeu = Othello(1, 1)
-  #AlphaBetaSearch(jeu)
-  while (jeu.tour < 59):
-    jeu.Tour()
-
-
-Game()
