@@ -1,56 +1,57 @@
-# Jeu Othello avec IA
-Ce dépôt contient une implémentation Python du jeu Othello (Reversi), y compris un adversaire IA qui utilise l'algorithme Minimax avec élagage Alpha-Beta et des heuristiques personnalisées pour les différentes phases du jeu.
+# Othello Game with AI
+This repository contains a Python implementation of the Othello (Reversi) game, including an AI opponent that uses the Minimax algorithm with Alpha-Beta pruning and custom heuristics for different phases of the game.
 
-## Caractéristiques
-- Interface utilisateur textuelle
-- Jeu humain contre IA
-- Algorithme Minimax avec élagage Alpha-Beta pour la prise de décision de l'IA
-- heuristique personnalisée pour les phases de début, de milieu et de fin de partie
-- Possibilité d'afficher les coups disponibles pour le joueur actuel
+## Features
+- Textual user interface
+- Human versus AI gameplay
+- Minimax algorithm with Alpha-Beta pruning for AI decision-making
+- Custom heuristics for the early, middle, and endgame phases
+- Ability to display available moves for the current player
 
 ## Getting Started
-Conditions préalables
+Prerequisites:
 Python 3.x
-Installation de l'application
-Clonez le dépôt :
+Application Installation:
+Clone the repository:
 ```bash
 git clone https://github.com/GuillaumeDorschner/Othello-ESILV.git
 ```
-Naviguez jusqu'au répertoire du projet :
+Navigate to the project directory:
 ```bash
 cd Othello-ESILV
 ```
 
-## Lancer le jeu
-Pour lancer le jeu, il suffit d'exécuter le fichier main.py :
+## Launching the Game
+To start the game, simply run the main.py file:
 
 ```bash
 python main.py
 ```
 
-## Comment jouer
-Au début du jeu, le joueur peut choisir d'incarner les Noirs ou les Blancs. Les Noirs jouent toujours en premier. L'échiquier sera affiché dans la ligne de commande, avec B (noirs), W (blancs).
+## How to Play
+At the beginning of the game, the player can choose to play as Black or White. Black always plays first. The chessboard will be displayed in the command line, with B (black), W (white).
 
-Pendant son tour, le joueur doit entrer la ligne et la colonne du coup désiré. L'IA effectue alors son déplacement et le tableau mis à jour s'affiche.
+During their turn, the player must enter the row and column of the desired move. The AI then makes its move, and the updated board is displayed.
 
-Le jeu se poursuit jusqu'à ce qu'il n'y ait plus de mouvements légaux pour l'un ou l'autre des joueurs ou que le plateau soit plein. Le joueur qui a le plus de pions de sa couleur sur le plateau gagne.
+The game continues until there are no more legal moves for either player or the board is full. The player with the most pieces of their color on the board wins.
 
-## Stratégie de l'IA
-L'IA utilise un algorithme Minimax avec élagage Alpha-Beta pour rechercher l'arbre de jeu et décider du meilleur coup. La fonction d'évaluation prend en compte différents facteurs en fonction de la phase de jeu en cours (début, milieu ou fin) :
+## AI Strategy
+The AI uses a Minimax algorithm with Alpha-Beta pruning to search the game tree and decide on the best move. The evaluation function considers different factors depending on the current game phase (beginning, middle, or end):
 
-Début (12 premiers coups) :
-- Priorité au placement des pions loin du centre
-- Priorité au gain de pions
+Beginning (first 12 moves):
 
-Milieu (36 coups suivants) :
-- Priorité aux positions de bord et de coin
-- Priorité à l'acquisition de pions
-- Privilégier les coups qui permettent une mobilité future
+Priority on placing pieces away from the center
+Priority on capturing pieces
+Middle (next 36 moves):
 
-Fin (12 derniers coups) :
-- Donner la priorité au gain de pions
-- Priorité aux coins importants
-Ces heuristiques aident l'IA à adapter sa stratégie à l'évolution de l'état du jeu et à créer un adversaire plus stimulant.
+Priority on edge and corner positions
+Priority on capturing pieces
+Favor moves that allow future mobility
+End (last 12 moves):
 
-## Licence
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
+Priority on capturing pieces
+Priority on important corners
+These heuristics help the AI adapt its strategy to the evolving game state and create a more challenging opponent.
+
+## License
+This project is under the MIT license. See the LICENSE file for more details.
